@@ -1,3 +1,11 @@
+1. PASS
+2. FAIL (внимательно читай постановку задачи !)
+3. FAIL (внимательно читай постановку задачи !)
+4. FAIL (В правильном решении у чая начало позиции 21 )
+5. FAIL (Знаки припинанич не слова! Ошибка подсчета на такой строке. "Строка      из русских слов что-то про ... Эммм чай ? ")
+6. PASS
+7. FAIL (Не проходит решение на смещении 1 !!)
+
 // 1. Дана строка-предложение, содержащая избыточные пробелы. 
 // Преобразовать ее так, чтобы между словами был ровно один пробел.
 
@@ -21,7 +29,9 @@ oneSpace(str)
 
 const s = "someString"
 const n = 12222
-n = n.toString ()
+// !! Присваивать константе новое значение нельзя.
+
+n = n.toString ()  // Зачем это ?????? См. условие задачи.
 
 function compareStr (s,n) {
     if ( s.length > n.length ) {
@@ -49,6 +59,7 @@ const s1 = "string one"
 const s2 = "string two"
 
 function newStr2 (){    // Тут до сих пор путаюсь что передавать в () функции....
+    // передовать все чем оперирует функция function newStr2 (n1, n2, s1, s2)
     let ss1 = s1.slice(n1)
     let ss2 = s2.split('').reverse().join('').slice(n2)
 
@@ -83,6 +94,7 @@ function strWrap() {
             return elem == s2
         })
         return y //  на сколько правильно тут оформлен вывод вплане дополнительной переменной
+        // лучше назвать это возвратом значения. Вполне корректно.
     } else {
         return 0
     }
@@ -125,18 +137,49 @@ function firstCharToUpperCase () {
 
 firstCharToUpperCase ()
 
-// 7. Дана строка-предложение на русском языке и 
-// число k (0 < k < 10). Зашифровать строку, 
-// выполнив циклическую замену каждой буквы 
-// на букву того же регистра, расположенную 
-// в алфавите на k-й позиции после шифруемой буквы 
-// (например, для k = 2 "А" перейдет в "В", "а" — в "в", 
-// "Б" — в "Г", "я" — в "б" и т.д.). 
+// 7. Дана строка-предложение на русском языке и
+// число k (0 < k < 10). Зашифровать строку,
+// выполнив циклическую замену каждой буквы
+// на букву того же регистра, расположенную
+// в алфавите на k-й позиции после шифруемой буквы
+// (например, для k = 2 "А" перейдет в "В", "а" — в "в",
+// "Б" — в "Г", "я" — в "б" и т.д.).
 // Букву "ё" в алфавите не учитывать, знаки препинания и пробелы не изменять.
 
+function secretStr (str, num) {
+    if (num >= 0 && num <= 10) {
+        let lowerCaseStr = str.toLowerCase()
+        let alph = "абвгдежзийклмнопрстуфхцчшщъыьэюя".split('')
+        let incoded = ""
 
-var str = "предложение на русском языке"
-var k = (0 < k < 10)
+        for (let i = 0; i < str.length; i += 1) {
+            let currentLetter = lowerCaseStr[i]
+            if (currentLetter === " ") {
+                incoded += currentLetter
+                continue
+            }
+            if (currentLetter === ".") {
+                incoded += currentLetter
+                continue
+            }
+            if (currentLetter === ",") {
+                incoded += currentLetter
+                continue
+            }
+            let currentIndex = alph.indexOf(currentLetter)
+            let newIndex = currentIndex + num
+            if (newIndex > 32) newIndex = newIndex - 33
+            if (str[i] === str[i].toUpperCase()) {
+                incoded += alph[newIndex].toUpperCase()
+            }
+            else incoded += alph[newIndex]
+        }
+        return incoded
+    }
+    else {
+        console.log ("Шифровать не получиться num не в рамках от 1 до 10")
+    }
 
-var secretStr =
+}
 
+secretStr("Предложение На русскОм язЫке",2)
